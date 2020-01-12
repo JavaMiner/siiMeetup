@@ -12,6 +12,9 @@
       <p v-if="truncated">{{ post.body | truncate(100) }}</p>
       <p v-else>{{ post.body }}</p>
     </b-card-text>
+    <div class="d-flex justify-content-end align-items-end flex-fill">
+      <slot />
+    </div>
   </b-card>
 </template>
 

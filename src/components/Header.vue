@@ -6,7 +6,8 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item to="/posts">Posts</b-nav-item>
+        <b-nav-item :to="{ name: 'posts' }">Posts</b-nav-item>
+        <b-nav-item @click="goToRandomPost()">Random Post</b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
@@ -19,7 +20,14 @@ export default {
     return {}
   },
   components: {},
-  methods: {},
+  methods: {
+    goToRandomPost() {
+      this.$router.push({
+        name: 'post',
+        params: { id: Math.ceil(Math.random() * 100) }
+      })
+    }
+  },
   computed: {},
   watch: {}
 }

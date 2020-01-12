@@ -1,56 +1,43 @@
 <template>
-  <b-row>
-    <b-col
-      cols="12"
-      class="position-absolute d-flex justify-content-center align-items-center"
-      v-if="loading"
-    >
-      <b-spinner
-        type="grow"
-        label="loading"
-        variant="primary"
-        class="spinner"
-      />
-    </b-col>
+  <LoadingWrapper :loading="loading">
     <b-col
       cols="12"
       md="6"
       lg="4"
       xl="3"
       class="mb-3 d-flex"
-      v-else
       v-for="post in posts"
       :key="post.id"
     >
-      <b-card
-        :title="post.title"
-        :img-src="
-          `https://picsum.photos/600/300/?image=${Math.ceil(
+      <SinglePost
+        :post="{
+          ...post,
+          image: `https://picsum.photos/600/300/?image=${Math.ceil(
             Math.random() * 25
           )}`
-        "
-        img-alt="image"
-        img-top
-        tag="article"
-        class="shadow"
-        body-class="d-flex flex-column"
+        }"
+        truncated
       >
-        <b-card-text>
-          <p>{{ post.body | truncate(100) }}</p>
-        </b-card-text>
-        <div class="d-flex justify-content-end align-items-end flex-fill">
-          <b-button variant="primary">See more</b-button>
-        </div>
-      </b-card>
+        <b-button
+          variant="primary"
+          :to="{ name: 'post', params: { id: post.id } }"
+          >See more</b-button
+        >
+      </SinglePost>
     </b-col>
-  </b-row>
+  </LoadingWrapper>
 </template>
 
 <script>
 import axios from 'axios'
+import LoadingWrapper from '../components/LoadingWrapper'
+import SinglePost from '../components/SinglePost'
 export default {
-  name: 'HTTP',
-  components: {},
+  name: 'Posts',
+  components: {
+    LoadingWrapper,
+    SinglePost
+  },
   data() {
     return {
       loading: true,
@@ -74,15 +61,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.position-absolute {
-  left: 0;
-  bottom: 0;
-  right: 0;
-  top: 0;
-  .spinner {
-    height: 5rem;
-    width: 5rem;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,25 +1,22 @@
 <template>
-  <b-row>
-    <b-col
-      cols="12"
-      class="position-absolute d-flex justify-content-center align-items-center"
-      v-if="loading"
-    >
-      <b-spinner
-        type="grow"
-        label="loading"
-        variant="primary"
-        class="spinner"
-      />
+  <LoadingWrapper :loading="loading">
+    <b-col cols="12" md="8" class="mx-auto d-flex flex-column">
+      <SinglePost :post="{ ...post, image: fullImageUrl }">
+        <b-button
+          variant="primary"
+          @click="$router.go(-1)"
+          size="lg"
+          class="mt-4 align-self-end"
+          >Back
+        </b-button>
+      </SinglePost>
     </b-col>
-    <b-col cols="12" md="8" class="mx-auto" v-else>
-      <SinglePost :post="{ ...post, image }" />
-    </b-col>
-  </b-row>
+  </LoadingWrapper>
 </template>
 
 <script>
 import axios from 'axios'
+import LoadingWrapper from '../components/LoadingWrapper'
 import SinglePost from '../components/SinglePost'
 
 export default {
@@ -28,26 +25,40 @@ export default {
     return {
       loading: true,
       post: {},
-      image: `https://picsum.photos/600/300/?image=${Math.ceil(
-        Math.random() * 25
-      )}`
+      image: 'https://picsum.photos/600/300/?image=',
+      imageId: Math.ceil(Math.random() * 25)
     }
   },
   props: ['id'],
   components: {
-    SinglePost
+    SinglePost,
+    LoadingWrapper
   },
   created() {
-    axios
-      .get(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
-      .then(response => {
-        this.post = response.data
-        this.loading = false
-      })
+    this.getData()
   },
-  methods: {},
-  computed: {},
-  watch: {}
+  methods: {
+    getData() {
+      this.loading = true
+      this.imageId = Math.ceil(Math.random() * 25)
+      axios
+        .get(`https://jsonplaceholder.typicode.com/posts/${this.id}`)
+        .then(response => {
+          this.post = response.data
+          this.loading = false
+        })
+    }
+  },
+  computed: {
+    fullImageUrl() {
+      return this.image + this.imageId
+    }
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === from.name) this.getData()
+    }
+  }
 }
 </script>
 

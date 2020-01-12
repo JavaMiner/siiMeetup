@@ -18,6 +18,16 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "posts" */ '../views/Posts.vue')
+  },
+  {
+    path: '/posts/:id',
+    name: 'post',
+    component: () => import(/* webpackChunkName: "post" */ '../views/Post.vue'),
+    props: true
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 

@@ -32,8 +32,15 @@
         img-alt="image"
         img-top
         tag="article"
+        class="shadow"
+        body-class="d-flex flex-column"
       >
-        <b-card-text> body: {{ post.body }} </b-card-text>
+        <b-card-text>
+          <p>{{ post.body | truncate(100) }}</p>
+        </b-card-text>
+        <div class="d-flex justify-content-end align-items-end flex-fill">
+          <b-button variant="primary">See more</b-button>
+        </div>
       </b-card>
     </b-col>
   </b-row>

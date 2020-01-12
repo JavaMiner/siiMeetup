@@ -32,6 +32,8 @@
 import axios from 'axios'
 import LoadingWrapper from '../components/LoadingWrapper'
 import SinglePost from '../components/SinglePost'
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Posts',
   components: {
@@ -45,6 +47,7 @@ export default {
     }
   },
   created() {
+    this.changeTitle('Example Blog')
     axios
       .get('https://jsonplaceholder.typicode.com/posts?userId=1')
       .then(response => {
@@ -55,7 +58,9 @@ export default {
         this.loading = false
       })
   },
-  methods: {},
+  methods: {
+    ...mapMutations(['changeTitle'])
+  },
   computed: {},
   watch: {}
 }

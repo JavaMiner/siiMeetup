@@ -18,6 +18,7 @@
 import axios from 'axios'
 import LoadingWrapper from '../components/LoadingWrapper'
 import SinglePost from '../components/SinglePost'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Post',
@@ -39,6 +40,7 @@ export default {
   },
   methods: {
     getData() {
+      this.changeTitle(`Example Post ${this.id}`)
       this.loading = true
       this.imageId = Math.ceil(Math.random() * 25)
       axios
@@ -47,7 +49,8 @@ export default {
           this.post = response.data
           this.loading = false
         })
-    }
+    },
+    ...mapMutations(['changeTitle'])
   },
   computed: {
     fullImageUrl() {

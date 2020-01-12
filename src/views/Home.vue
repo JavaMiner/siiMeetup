@@ -10,14 +10,21 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'Home',
   components: {},
   data() {
     return {}
   },
+  created() {
+    this.changeTitle('Welcome to Sii Meetup')
+  },
   props: {},
-  methods: {},
+  methods: {
+    ...mapMutations(['changeTitle'])
+  },
   computed: {},
   watch: {}
 }

@@ -7,7 +7,7 @@
       <b-container fluid class="py-3">
         <b-row>
           <b-col cols="12">
-            <h1 class="display-2">Welcome to Sii Meetup</h1>
+            <h1 class="display-2">{{ pageTitle }}</h1>
           </b-col>
         </b-row>
         <router-view />
@@ -22,6 +22,7 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
+import { mapState } from 'vuex'
 export default {
   name: 'App',
   data() {
@@ -32,7 +33,9 @@ export default {
     Footer
   },
   methods: {},
-  computed: {},
+  computed: {
+    ...mapState(['pageTitle'])
+  },
   watch: {}
 }
 </script>
